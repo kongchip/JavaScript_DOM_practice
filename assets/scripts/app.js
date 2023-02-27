@@ -1,14 +1,37 @@
 const addMovieModal = document.getElementById('add-modal');
 const clickAddMovieButton = document.querySelector('header button');
-
 const backdrop = document.getElementById('backdrop');
+const entryTextSection = document.getElementById('entry-text');
 
 const cancelAddMovieButton = addMovieModal.querySelector('.btn--passive');
 const confirmAddMovieButton = addMovieModal.querySelector('.btn--success');
-
 const userInputs = addMovieModal.querySelectorAll('input');
 
-const movie = [];
+const movies = [];
+
+const updateUI = () => {
+  if (movies.length === 0) {
+    entryTextSection.style.display = 'block';
+  } else {
+    entryTextSection.style.display = 'none';
+  }
+};
+
+const renderNewMovieElement = (title, imageUrl, rating) => {
+  const newMoveElement = document.createElement('li');
+  newMoveElement.className = 'movie-element';
+  newMoveElement.innerHTML = `
+    <div class="movie-element__image">
+        <img src = "${imageUrl}" alt = "${title}">
+    </div>
+    <div class = "movie-element__info">
+    <h2>${title}</h2>
+    <p>${rating}/5 starts</p>
+    </div>
+    `;
+  const movieList = document.getElementById('movie-list');
+  movieList.append(newMoveElement);
+};
 
 const toggleBackDrop = () => {
   backdrop.classList.toggle('visible');
@@ -54,10 +77,12 @@ const addMovieHandler = () => {
     rating: ratingValue,
   };
 
-  movie.push(newMovie);
-  console.log(movie);
+  movies.push(newMovie);
+  console.log(movies);
   toggleMovieModal();
   clearMovieInput();
+  renderNewMovieElement(newMovie.title, newMovie.image, newMovie.rating);
+  updateUI();
 };
 
 // 배경클릭시 행동 함수 레이아웃 닫기
