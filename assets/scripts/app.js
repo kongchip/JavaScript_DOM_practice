@@ -39,6 +39,7 @@ const deleteMovieHandler = (movieId) => {
   const movieList = document.getElementById('movie-list');
   movieList.children[movieIndex].remove();
   closeMovieDeletionModal();
+  updateUI();
 };
 
 const startMovieHandler = (movieId) => {
